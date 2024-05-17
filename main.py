@@ -14,7 +14,7 @@ def get_images(location: str) -> list:
             ext = Path(file).suffix
             if file.is_file() and ext in VALID_IMAGES:
                 images.append(file)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         print("No such file exists")
         raise
     else:
@@ -24,12 +24,10 @@ def get_images(location: str) -> list:
 
 def show_image(images: list) -> None:
     try:
-        length = len(images)
-    except TypeError as e:
-        print("no images in this location")
-        raise
-    else:
         choice = random.choice(images)
+    except TypeError:
+        print("No images in this location")
+    else:
         image = Image.open(choice)
         image.show()
 
@@ -37,7 +35,7 @@ def show_image(images: list) -> None:
 def get_path() -> str:
     try:
         location = sys.argv[1]
-    except IndexError as e:
+    except IndexError:
         print("No location provided")
         raise
     else:
