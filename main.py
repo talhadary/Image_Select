@@ -2,52 +2,50 @@ import sys
 from PIL import Image
 from pathlib import Path
 from random import randint
+valid_images = [".jpg", ".jpeg", ".png"]
 
 
-def getimages(location):
-    image = []
-    validimages = [".jpg", ".jpeg", ".png"]
-    p = Path(location)
+def get_images(location):
+    images = []
+    directory = Path(location)
     try:
-        for x in p.iterdir():
-            ext = Path(x).suffix
-            if x.is_file() and ext in validimages:
-                image.append(x)
+        for file in directory.iterdir():
+            ext = Path(file).suffix
+            if file.is_file() and ext in valid_images:
+                images.append(file)
     except FileNotFoundError as e:
         print(e)
         print("No such file exists")
-        sys.exit()
-    except Exception as e:
-        print(e)
-        print("There was a problem")
-        sys.exit()
+        raise
     else:
-        if len(image) != 0:
-            return image
+        if len(images) != 0:
+            return images
 
 
-def showimage(img: list):
+def show_image(images: list):
     try:
-        length = len(img)
+        length = len(images)
     except TypeError as e:
-        print(e)
         print("no images in this location")
-        sys.exit()
+        raise
     else:
         index = randint(0, length - 1)
-        image = Image.open(img[index])
+        image = Image.open(images[index])
         image.show()
 
 
-if __name__ == "__main__":
+def main():
     try:
         location = sys.argv[1]
     except IndexError as e:
         print(e)
         print("No location provided")
-        sys.exit()
+        raise
     else:
-        img = getimages(location)
-        showimage(img)
+        images = get_images(location)
+        show_image(images)
 
+
+if __name__ == "__main__":
+    main()
 
