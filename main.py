@@ -17,17 +17,15 @@ def get_images(location: str) -> list:
     except FileNotFoundError:
         print("No such file exists")
         raise
-    else:
-        if len(images) != 0:
-            return images
+    finally:
+        return images
 
 
 def show_image(images: list) -> None:
-    try:
-        choice = random.choice(images)
-    except TypeError:
-        print("No images in this location")
+    if len(images) == 0:
+        print("No images at this location!")
     else:
+        choice = random.choice(images)
         image = Image.open(choice)
         image.show()
 
