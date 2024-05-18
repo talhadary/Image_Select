@@ -40,7 +40,7 @@ def get_path() -> str:
         return location
 
 
-def main():
+def main() -> None:
     location = get_path()
     images = get_images(location)
     show_image(images)
