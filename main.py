@@ -16,8 +16,8 @@ def get_images(location: str) -> list:
                 images.append(file)
     except FileNotFoundError:
         print("No such file exists")
-        raise
-    finally:
+        return images
+    else:
         return images
 
 
